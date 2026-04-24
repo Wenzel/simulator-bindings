@@ -334,39 +334,7 @@ impl ClassDeriveOpts {
                             )
                         }
                         "HashMap" | "BTreeMap" => {
-                            let key_inner = match &segment.arguments {
-                                PathArguments::AngleBracketed(args) => {
-                                    let Some(inner) = args.args.first() else {
-                                        return (
-                                            Error::custom(format!(
-                                                "Unsupported type for attribute (missing inner angle bracketed arg): {}",
-                                                ty.to_token_stream()
-                                            ))
-                                            .write_errors(),
-                                            None,
-                                        );
-                                    };
-                                    match inner {
-                                        GenericArgument::Type(ty) => {
-                                            Self::attribute_to_typestring_simple(
-                                                ty.to_token_stream().to_string().as_str(),
-                                            )
-                                        }
-                                        _ => Error::custom(format!(
-                                            "Unsupported type for attribute (invalid inner type): {}",
-                                            ty.to_token_stream()
-                                        ))
-                                        .write_errors(),
-                                    }
-                                }
-                                _ => Error::custom(format!(
-                                    "Unsupported type for attribute (unsupported inner segment argument type): {}",
-                                    ty.to_token_stream()
-                                ))
-                                .write_errors(),
-                            };
-
-                            (quote!(simics::TypeStringType::Dictionary), Some(key_inner))
+                            (quote!(simics::TypeStringType::Dictionary), None)
                         }
                         "Option" => {
                             let inner = match &segment.arguments {
