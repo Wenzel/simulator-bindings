@@ -330,7 +330,7 @@ impl ClassDeriveOpts {
                                 quote!(simics::TypeStringType::List(
                                     vec![simics::TypeStringListType::ZeroOrMore(Box::new(#inner))]
                                 )),
-                                Some(quote!(simics::TypeStringType::Integer)),
+                                None,
                             )
                         }
                         "HashMap" | "BTreeMap" => {
